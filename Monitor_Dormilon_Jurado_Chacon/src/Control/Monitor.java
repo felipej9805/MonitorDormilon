@@ -1,4 +1,4 @@
-package control;
+package Control;
 
 import java.util.Random;
 import java.util.concurrent.Semaphore;
