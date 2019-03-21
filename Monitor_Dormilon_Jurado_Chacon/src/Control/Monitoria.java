@@ -8,9 +8,11 @@ public class Monitoria {
 
 	private static int num_sillas_vacias;
 	private static int numEstudiantes;
+	
 	private static Semaphore S_salaEspera;
 	private static Semaphore S_despertarMonitor;
 
+	//METODOS GET Y SET
 	public static int getNum_sillas_vacias() {
 		return num_sillas_vacias;
 	}
@@ -19,6 +21,7 @@ public class Monitoria {
 		Monitoria.num_sillas_vacias = num_sillas_vacias;
 	}
 	
+	//CONSTRUCTOR
 	public Monitoria() {
 		num_sillas_vacias = 3;
 	}
@@ -28,25 +31,34 @@ public class Monitoria {
 		
 		Monitoria monitoria = new Monitoria();
 		
-		System.out.println("Ingresa el numero de estudiantes:");
+		System.out.println("Ingresa la cantidad de estudiantes:");
 
-		BufferedReader inConsole = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
 
-		String num = inConsole.readLine();
-		numEstudiantes = Integer.parseInt(num);
+		String cantidad = lector.readLine();
+		
+		numEstudiantes = Integer.parseInt(cantidad);
 		
 		// Todos semaforos binarios
 		S_despertarMonitor = new Semaphore(1, true);
 		S_salaEspera = new Semaphore(1, true);
+		
 		// Instanciar los estudiantes
 		Estudiante[] estudiantes = new Estudiante[numEstudiantes];
 		//for (int i = 0; i < numEstudiantes; i++){
 			//estudiantes[i] =new Estudiante(S_despertarMonitor, S_salaEspera, i, monitoria);
 			//estudiantes[i].start();
 		//}
+		
+		
+		
 		// Instanciar el monitor
 		Monitor elMonitor = new Monitor(monitoria.S_salaEspera, monitoria);
-		//elMonitor.start(); // Iniciar los hilos
+		
+		
+		//elMonitor.start(); 
+		
+		// Iniciar los hilos
 		for(int i=0;i<numEstudiantes;i++){
 			estudiantes[i] = new Estudiante(S_despertarMonitor, S_salaEspera, i, monitoria);
 			estudiantes[i].start();

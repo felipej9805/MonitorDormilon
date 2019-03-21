@@ -21,16 +21,25 @@ public class Monitor extends Thread {
 	public void run() {
 		while (true) {
 			try{
+				
 				S_salaEspera.acquire(); // Se revisa el estado de la sala
+				
 				//En el if se verifica si hay sillas vacias
 			    if (monitoria.getNum_sillas_vacias()<3) {
-					System.out.println("* [MONITOR] Durmiendo...");
+			    	
+					System.out.println("* <MONITOR> Durmiendo...");
+					
 					monitoria.setNum_sillas_vacias(monitoria.getNum_sillas_vacias()+1);//Se desocupa la silla del estudiante que pasa a platicar con el monitor
-					System.out.println("* [MONITOR] Despierto, hay un estudiante");
+					
+					System.out.println("* <MONITOR> Despierto, hay un estudiante");
+					
 					S_salaEspera.release();
-					System.out.println("* [MONITOR] Trabajando ando");
+					
+					System.out.println("* <MONITOR> Trabajando");
+					
 					sleep(rdm.nextInt(10)*1000+1); //Tiempo que dura la asesoria
-					System.out.println("* [MONITOR] Regresa cuando lo necesites");
+					
+					System.out.println("* <MONITOR> Vuelve cuando lo necesites");
 				}else{
 					S_salaEspera.release();
 				}
